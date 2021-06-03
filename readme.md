@@ -1,6 +1,5 @@
 # Общая схема
 
-```
 |   ProfileManager
 |         |
 +---------+-----------------------------------------------------+
@@ -17,7 +16,6 @@
 |    +---------+--- Channel                   +--- Bot          |
 |                                                               |
 +---------------------------------------------------------------+
-```
 
 # Описание элементов
 
@@ -26,7 +24,7 @@
 class ProfileManager:
   def google() -> User
   def github() -> Developer
-  def bot(token) -> Bot```
+  def bot(token) -> Bot
 ```
 
 *IOpenable*  - интерфейс с методом open()
@@ -55,18 +53,24 @@ class Folder:
 ```
 *PrivateChat*  - личный чат
 ```ruby
-class PrivateChat < IMessage:
+class PrivateChat:
+  include IOpenable
+  include IMessage
   user1: IProfile
   user2: IProfile
 ```
 *PublicChat*  - беседа/комната
 ```ruby
-class PublicChat < IMessage:
+class PublicChat:
+  include IOpenable
+  include IMessage
   users: Array[IProfile]
 ```
 *Channel*  - канал (как в телеге)
 ```ruby
-class Channel < IMessage:
+class Channel:
+  include IOpenable
+  include IMessage
   owner: IProfile
 ```
 
@@ -77,6 +81,7 @@ module IProfile:
   pictureURL: String
   root: Folder
   channels: Array[Channel]
+  wall: Wall
 ```
 
 *User*  - пользователь
