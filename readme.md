@@ -41,7 +41,6 @@ module IChat:
   def open() -> UI
   messages: Array[Map]
   name: String
-  users: IProfile
 ```
 
 *Folder*  - папка
