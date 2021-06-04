@@ -38,7 +38,6 @@ module IOpenable:
 ```ruby
 module IChat:
   def write(Map) -> boolean
-  def open() -> UI
   messages: Array[Map]
   name: String
 ```
