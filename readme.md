@@ -34,9 +34,9 @@ class ProfileManager:
 module IOpenable:
   def open() -> UI
 ```
-*IMessage*  - интерфейс с методом write(IProfile, Map)
+*IChat*  - интерфейс с методом write(IProfile, Map)
 ```ruby
-module IMessage:
+module IChat:
   def write(Map) -> boolean
   def open() -> UI
   messages: Array[Map]
