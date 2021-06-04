@@ -56,7 +56,7 @@ class Folder:
 ```ruby
 class PrivateChat:
   include IOpenable
-  include IMessage
+  include IChat
   user1: IProfile
   user2: IProfile
 ```
@@ -64,14 +64,14 @@ class PrivateChat:
 ```ruby
 class PublicChat:
   include IOpenable
-  include IMessage
+  include IChat
   users: Array[IProfile]
 ```
 *Channel*  - канал (как в телеге)
 ```ruby
 class Channel:
   include IOpenable
-  include IMessage
+  include IChat
   owner: IProfile
 ```
 
