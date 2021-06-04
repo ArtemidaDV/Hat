@@ -99,6 +99,7 @@ class Developer:
 *Bot*  - бот
 ```ruby
 class Bot:
+  include IProfile
   def response(Map) -> Map
 ```
 
