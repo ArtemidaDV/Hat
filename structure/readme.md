@@ -3,25 +3,25 @@
 ```
 |   ProfileManager
 |         |
-+---------+-----------------------------------------------------+
-|  IOpenable                                                    |
-|    |                                                          |
-|    +--- Folder                    Wall --- Post               |
-|    |                               |                          |
-|    |      IMessage ------------ IProfile ---+                 |
-|    |         |                              |                 |
-|    +---------+--- PrivateChat               +--- Developer    |
-|    |         |                              |                 |
-|    +---------+--- PublicChat                +--- User         |
-|    |         |                              |                 |
-|    +---------+--- Channel                   +--- Bot          |
-|                                                               |
-+---------------------------------------------------------------+
++---------+------------------------------------------------------------------------+
+|  IOpenable                                                                       |
+|    |                                                                             |
+|    +--- Folder                    Wall ----------- Post          Code            |
+|    |                               |                               |             |
+|    |      IMessage ------------ IProfile -----------------+     Project          |
+|    |         |                     |                      |        |             |
+|    +---------+--- PrivateChat      +---- Album ---+       +--- Developer ---+    |
+|    |         |                     |              |       |                 |    |
+|    +---------+--- PublicChat    Directory       Audio     +--- User         |    |
+|    |         |                     |                      |                 |    |
+|    +---------+--- Channel         File                    +--- Bot ---------+    |
+|                                                                                  |
++----------------------------------------------------------------------------------+
 ```
 
 # Описание элементов
 
-*ProfileManager*  - бэкенд класс для регистрации пользователей, который авторизует юзеров и даёт доступ
+*ProfileManager*  - класс для регистрации пользователей, который авторизует юзеров и даёт доступ
 ```ruby
 class ProfileManager:
   def google() -> User
@@ -119,4 +119,69 @@ class Post:
   date: Date
   wall: Wall
   data: Map
+```
+
+*IDescriptable* - класс файл/папка
+```ryby
+interface IDescriptable:
+  name: String
+```
+
+*File* - класс для файлов
+```ruby
+class File:
+  include IDescriptable
+  link: String
+```
+
+*Directory* - класс для папок с файлами
+```ruby
+class Directory:
+  include IDescriptable
+  files: Array[IDescriptable]
+```
+
+*IMedia* - интерфейс медиа
+```ruby
+interface IMedia:
+  link: Strinf
+```
+
+*Audio* - класс для аудиофайлов
+```ruby
+class Audio:
+  include IMedia
+  name: String
+  author: String
+```
+
+*Picture* - (дата-)класс для изображений
+```ruby
+class Picture:
+  include IMedia
+```
+
+*Album* - класс для альбомов
+```ruby
+class Album:
+  owner: IProfile
+  name: String
+  preview: Picture
+  data: Array[IMedia]
+```
+
+*Code* - класс для файлов с кодом
+```ruby
+class Code:
+  data: String
+  name: String
+  location: String
+```
+
+*Project* - класс проекта
+```ruby
+class Project:
+  code: Array[Code]
+  owner: Developer
+  devs: Array[Developer]
 ```
