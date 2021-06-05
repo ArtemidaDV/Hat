@@ -14,17 +14,20 @@ Minimun API is listed here
 + picture.moreload(album: Album?) - upload pictures to server
 
 ## User API
+
 ### Folders
 + user.folder.create(name: String) - create folder named __name__ for __user__
 + user.folder.move(folder: Folder, dest: Folder) - move __folder__ to __dest__ in __user__ profile
 + user.folder.move.chat(chat: IChat, dest: Folder) - move __chat__ to __dest__ in __user__ profile
 + user.folder.set.name(folder: Folder, name: String) - set new __name__ for __folder__ in __user__ profile
 + user.folder.set.picture(pictureURL: String) - sets new __user__'s avatar by __pictureURL__
+
 ### Info
 + user.get(user: IProfile, fields: Array?) - gets user data (__fields__)
 + user.set(user: IProfile, fields: Map) - sets __user__ data (__fields__)
 + user.set.name(user: IProfile, name: String) - sets __user__ __name__
 + user.set.picture(user: IProfile, pictureURL: String) - sets __user__'s avatar by __pictureURL__
+
 ### Chats
 + user.join.chat(user: IProfile, chat: IChat) - __user__ joins the __chat__
 + user.new.channel(user: IProfile, name: String) - __user__ creates his own channel named __name__
@@ -41,6 +44,7 @@ Middle API is listed here
 + file.folder.rename(file: File, name: String) - rename __file__ to __name__
 + file.folder.rm(file: File) - remove __file__
 + file.upload(location: Directory) - updload file to __location__
+
 ## Audio
 + audio.album.add(album: Album, audio: Audio) - add __audio__ to __album__
 + audio.album.create(name: String) - create album named __name__
@@ -53,13 +57,16 @@ Middle API is listed here
 Maximum API is listed here
 
 ## Developers
+
 ### Code
 + developer.code.delete(code: Code) - deletes __code__
 + developer.code.update(old: Code, new: Code) - updates __old__ code
 + developer.code.upload(code: Code) - uploads your __code__
+
 ### Organizations
 + developer.organizations.get(user: Developer) - get all __user__'s organizations
 + developer.organizations.set(orgs: String[]) - set all your organizations to __orgs__
+
 ### Project
 + developer.project.create(name: String) - creates new project named __name__
 + developer.project.delete(project: Project) - deletes __project__
@@ -68,5 +75,6 @@ Maximum API is listed here
 + developer.project.set.name(project: Project, name: String) - set __project__ name to __name__
 + developer.project.set.picture(project: Project, pictureURL: String) - set __project__ picture to __pictureURL__
 + developer.project.set.techstack(project: Project, techstack: String[]) - set __project__'s tech stack to __techstack__
+
 ### Statistics
 + developer.statistics.get(user: Developer) - get __user__'s statistics
