@@ -147,7 +147,7 @@ class Directory:
 *IMedia* - интерфейс медиа
 ```ruby
 interface IMedia:
-  link: Strinf
+  link: String
 ```
 
 *Audio* - класс для аудиофайлов
