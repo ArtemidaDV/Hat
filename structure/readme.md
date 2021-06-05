@@ -87,6 +87,7 @@ module IProfile:
   usrroot: Directory
   channels: Array[Channel]
   wall: Wall
+  blacklist: IProfile
 ```
 
 *User*  - пользователь
