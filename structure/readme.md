@@ -125,7 +125,7 @@ class Post:
 ```
 
 *IDescriptable* - класс файл/папка
-```ryby
+```ruby
 interface IDescriptable:
   name: String
 ```
