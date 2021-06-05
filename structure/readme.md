@@ -40,6 +40,7 @@ module IChat:
   def write(Map) -> boolean
   messages: Array[Map]
   name: String
+  pictureURL: String
 ```
 
 *Folder*  - папка
@@ -64,6 +65,8 @@ class PrivateChat:
 class PublicChat:
   include IOpenable
   include IChat
+  inviteLinks: Array[String]
+  banned: Array[IProfile]
   users: Array[IProfile]
 ```
 *Channel*  - канал (как в телеге)
@@ -72,6 +75,7 @@ class Channel:
   include IOpenable
   include IChat
   owner: IProfile
+  inviteLink: String
 ```
 
 *IProfile*  - интерфейс профиля любого, кто может писать
