@@ -3,6 +3,7 @@ Minimun API is listed here
 
 ## Chats API
 + chat.ban(chat: IChat, user: IProfile) - ban __user__ in __chat__
++ chat.unban(chat: IChat, user: IProfile) - unban __user__ in __chat__
 + chat.invite(chat: IChat, user: IProfile) - send an invatation for __user__ to join the __chat__
 + chat.kick(chat: IChat, user: IProfile) - kick __user__ from __chat__
 + chat.update.name(chat: IChat, name: String) - set new __chat__ __name__
@@ -39,6 +40,10 @@ Minimun API is listed here
 + user.new.channel(user: IProfile, name: String) - __user__ creates his own channel named __name__
 + user.new.chat.private(other: IProfile) - __user__ starts private chat with any __other__ user
 + user.new.chat.public(name: String) - __user__ creates public chat named __name__
+
+### Blacklist
++ user.blacklist.add(user: IProfile) - you add __user__ to your blacklist
++ user.blacklist.remove(user: IProfile) - you removes __user__ from your blacklist
 
 # MidAPI
 Middle API is listed here
