@@ -1,11 +1,10 @@
 # Общая схема
 
 ```
-|   ProfileManager
-|         |
+    ProfileManager
+          |
 +---------+------------------------------------------------------------------------+
-|  IOpenable                                                                       |
-|    |                                                                             |
+|                                                                                  |
 |    +--- Folder                    Wall ----------- Post          Code            |
 |    |                               |                               |             |
 |    |      IMessage ------------ IProfile -----------------+     Project          |
@@ -29,11 +28,6 @@ class ProfileManager:
   def bot(token) -> Bot
 ```
 
-*IOpenable*  - интерфейс с методом open()
-```ruby
-module IOpenable:
-  def open() -> UI
-```
 *IChat*  - интерфейс с методом write(IProfile, Map)
 ```ruby
 module IChat:
@@ -46,8 +40,6 @@ module IChat:
 *Folder*  - папка
 ```ruby
 class Folder:
-  include IOpenable
-  def open() -> UI
   elements: Array[IOpenable]
   name: String
   pictureURL: String
@@ -55,7 +47,6 @@ class Folder:
 *PrivateChat*  - личный чат
 ```ruby
 class PrivateChat:
-  include IOpenable
   include IChat
   user1: IProfile
   user2: IProfile
@@ -63,7 +54,6 @@ class PrivateChat:
 *PublicChat*  - беседа/комната
 ```ruby
 class PublicChat:
-  include IOpenable
   include IChat
   inviteLinks: Array[String]
   banned: Array[IProfile]
@@ -72,7 +62,6 @@ class PublicChat:
 *Channel*  - канал (как в телеге)
 ```ruby
 class Channel:
-  include IOpenable
   include IChat
   owner: IProfile
   inviteLink: String
