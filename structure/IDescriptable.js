@@ -1,0 +1,3 @@
+class IDescriptable {
+	name
+}
