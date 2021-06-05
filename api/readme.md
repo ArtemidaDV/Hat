@@ -4,7 +4,7 @@ Minimun API is listed here
 ## Chats API
 + chat.ban(chat: PublicChat, user: IProfile) - ban __user__ in __chat__
 + chat.unban(chat: PublicChat, user: IProfile) - unban __user__ in __chat__
-+ chat.invite(chat: IChat, user: IProfile) - send an invatation for __user__ to join the __chat__
++ chat.invite(chat: Channel|PublicChat, user: IProfile) - send an invatation for __user__ to join the __chat__
 + chat.kick(chat: IChat, user: IProfile) - kick __user__ from __chat__
 + chat.update.name(chat: IChat, name: String) - set new __chat__ __name__
 + chat.update.picture(chat: IChat, pictureURL: String) - set new picture (__pictureURL__) in __chat__
