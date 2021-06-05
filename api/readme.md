@@ -9,6 +9,12 @@ Minimun API is listed here
 + chat.update.picture(chat: IChat, pictureURL: String) - set new picture (__pictureURL__) in __chat__
 + chat.write(chat: IChat, message: Map) - send __message__ in __chat__
 
+## Albums API
++ audio.album.create(name: String) - create album named __name__
++ audio.album.delete(album: Album) - delete __album__
++ audio.album.set.name(album: Album, name: String) - set __album__ name to __name__
++ audio.album.set.picture(album: Album, pictureURL: String) set __album__ picture to __pictureURL__ 
+
 ## Picture API
 + picture.upload(album: Album?) - upload picture to server
 + picture.moreload(album: Album?) - upload pictures to server
@@ -46,11 +52,6 @@ Middle API is listed here
 + file.upload(location: Directory) - updload file to __location__
 
 ## Audio
-+ audio.album.add(album: Album, audio: Audio) - add __audio__ to __album__
-+ audio.album.create(name: String) - create album named __name__
-+ audio.album.delete(album: Album) - delete __album__
-+ audio.album.set.name(album: Album, name: String) - set __album__ name to __name__
-+ audio.album.set.picture(album: Album, pictureURL: String) set __album__ picture to __pictureURL__ 
 + audio.upload(album: Album?) - upload an audio file
 
 # MaxAPI
