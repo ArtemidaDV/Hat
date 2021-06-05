@@ -11,7 +11,7 @@ Minimun API is listed here
 
 ## Picture API
 + picture.upload(album: Album?) - upload picture to server
-+ pictures.upload(album: Album?) - upload pictures to server
++ picture.moreload(album: Album?) - upload pictures to server
 
 ## User API
 ### Folders
