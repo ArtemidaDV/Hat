@@ -84,6 +84,7 @@ module IProfile:
   name: String
   pictureURL: String
   root: Folder
+  usrroot: Directory
   channels: Array[Channel]
   wall: Wall
 ```
@@ -98,7 +99,9 @@ class User:
 ```ruby
 class Developer:
   include IProfile
-  ...
+  bots: Array[Bot]
+  organisations: Array[String]
+  projects: Array[Project]
 ```
 *Bot*  - бот
 ```ruby
