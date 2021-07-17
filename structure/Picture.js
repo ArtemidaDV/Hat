@@ -1,3 +1,0 @@
-class Picture extends IMedia {
-
-}

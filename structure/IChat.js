@@ -1,4 +1,0 @@
-class IChat {
-	name
-	pictureURL
-} 
