@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title id="page title"></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--link rel="stylesheet" type="text/css" href="style/style.css"-->
+        <script src="structure/IDescriptable.js"></script><script src="structure/IProfile.js"></script><script src="structure/IMedia.js"></script><script src="structure/IChat.js"></script><script src="structure/IOpenable.js"></script><script src="structure/File.js"></script><script src="structure/Directory.js"></script><script src="structure/Code.js"></script><script src="structure/Project.js"></script><script src="structure/Audio.js"></script><script src="structure/Picture.js"></script><script src="structure/Album.js"></script><script src="structure/Channel.js"></script><script src="structure/PrivateChat.js"></script><script src="structure/PublicChat.js"></script><script src="structure/User.js"></script><script src="structure/Developer.js"></script><script src="structure/Bot.js"></script><script src="structure/ProfileManager.js"></script><script src="links/PublicChat.js"></script><script src="links/PrivateChat.js"></script><script src="links/Channel.js"></script><script src="links/Invitation.js"></script><script src="api/API.js"></script><script src="/__/firebase/8.6.5/firebase-app.js"></script><script src="/__/firebase/8.6.5/firebase-analytics.js"></script><script src="/__/firebase/8.6.5/firebase-auth.js"></script><script src="/__/firebase/8.6.5/firebase-firestore.js"></script><script src="/__/firebase/8.6.5/firebase-database.js"></script><script src="/__/firebase/8.6.5/firebase-storage.js"></script><script src="load.js"></script>
+        <style type="text/css">
+            @font-face {
+                font-family: Raleway;
+                src: url("font/Raleway.ttf"), url("font/Raleway.otf");
+            }
+
+            @font-face {
+                font-family: Source code Pro;
+                src: url("font/SourceCodePro.ttf");
+            }
+
+            @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@5.2/distr/fira_code.css);
+            
+            * {
+                -webkit-touch-callout: none; 
+                -webkit-user-select: none; 
+                -khtml-user-select: none; 
+                -moz-user-select: none; 
+                -ms-user-select: none; 
+                user-select: none;
+                user-drag: none; 
+                -webkit-user-drag: none;
+                -ms-user-select: none;
+            }
+
+            .underline {
+                border-width: 2px;
+                border: solid;
+                border-image: linear-gradient(90deg, #b66dff 0%, #a970ef 33%, #8876c9 100%);
+                border-image-slice: 1;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+            }
+
+            .darken {
+                background-color: #00000077;
+            }
+
+            h1, p, message, message > text, button, input {
+                font-family: Raleway;
+            }
+
+            h1 {
+                color: white;
+                font-family: Raleway;
+                font-size: 24pt;
+            }
+
+            h1.title {
+                padding-left: 20px;
+                height: 5vh;
+                white-space: nowrap;
+            }
+
+            .nooutline:focus {
+                outline: none;
+            }
+
+            .noise {
+                position: absolute;
+                opacity: 50%;
+                background: url(data:image/png;base64,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);
+            }
+
+            .blur {
+                backdrop-filter:  blur(5px);
+            }
+
+            .moreblur {
+                backdrop-filter:  blur(15px);
+            }
+        </style>
+        <style type="text/css">
+            .scrolles {
+                scroll-behavior: smooth;
+            }
+
+            .scrolles::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+
+            .scrolles::-webkit-scrollbar-track {
+                background: #0000;
+                padding: 0px;
+            }
+
+            .scrolles::-webkit-scrollbar-thumb {
+                background: #0009;
+                border-radius: 4px;
+            }
+
+            .scrolles::-webkit-scrollbar-thumb:hover {
+                background: #F67E7D90;
+            }
+
+            .scrolles::-webkit-scrollbar-corner {
+                opacity: 0%;
+            }
+        </style>
+        <style type="text/css">
+            folder {
+                display: block;
+            }
+
+            folder > folder, fake > folder {
+                margin-left: 10px;
+                padding-left: 20pt;
+                padding-bottom: 10pt;
+                border-left: dashed #fff5 2px;
+            }
+
+            folder#root {
+                min-height: calc(95vh - 50px);
+                height: calc(95vh - 50px);
+                padding-left: 2px;
+            }
+
+            folder > hr, fake > hr {
+                opacity: 25%;
+            }
+
+            folder > chattab, fake > chattab {
+                display: block;
+                vertical-align: middle;
+                height: 18pt;
+                width: 100%;
+                min-width: fit-content;
+                padding-left: 20px;
+                padding-top: 10pt;
+                padding-bottom: 10pt;
+                margin-top: 2px;
+                margin-bottom: 2px;
+                white-space: nowrap;
+                vertical-align: middle;
+                border: solid #0000 1px;
+            }
+
+            chattab:hover {
+                background: #994c5270;
+                border: solid #994c52a0 1px;
+                border-radius: 2px;
+            }
+
+            chattab > img {
+                vertical-align: middle;
+                max-height: 22pt;
+                max-width: 22pt;
+                border-radius: 50%;
+                vertical-align: middle;
+                /*margin: 6pt;*/
+                display: inline-block;
+            }
+
+            chattab > name {
+                display: inline-block;
+                font-size: 16pt;
+                padding-left: 4px;
+                padding-right: 20px;
+                color: white;
+                font-family: Fira Code;
+            }
+
+            folder.folded {
+                height: calc(5vh + 2px + 10pt);
+                overflow: hidden;
+            }
+
+            message {
+                display: block;
+                min-width: 67vw;
+                max-width: 67vw;
+                margin: 0.4vw;
+                background: #0002;
+                border: solid #0000 1px;
+            }
+
+            message:hover {
+                background: #994c5270;
+                border: solid #994c52a0 1px;
+                border-radius: 2px;
+            }
+
+            message > author {
+                max-height: 12pt;
+                margin-right: 2em;
+                padding: 2px;
+                vertical-align: middle;
+            }
+
+            message > author:hover {
+                background: #694daf70;
+            }
+
+            message > author > name {
+                color: #f77;
+                font-family: Fira Code;
+                font-size: 2.4vh;
+                font-weight: bold;
+            }
+
+            message > author > name:hover {
+                color: #579;
+            }
+
+            message > author > img {
+                max-height: calc(2.4vh - 2px);
+                vertical-align: middle;
+                padding-right: 2px;
+            }
+
+            message > text {
+                color: #dbd7a8;
+                font-family: Raleway;
+                font-size: 12pt;
+            }
+
+            message > images {
+                display: block;
+                text-align: center;
+            }
+
+            message > images > img {
+                min-width: 7.5vw;
+                max-width: 20vw;
+                max-height: 30vh;
+                display: inline-grid;
+                margin: 2wv;
+                border: solid #0000 2px;
+                border-radius: 1.5px;
+            }
+
+            message > images > img:hover {
+                border: solid 2px;
+                border-image: linear-gradient(25deg, #e0f779, #f79079);
+                border-image-slice: 2;
+                background: #694daf70;
+                filter: brightness(120%);
+            }
+
+            message > event {
+                color: #ebc7b8;
+                background-color: #2222;
+                border-radius: 4px;
+                font-family: Raleway;
+                font-size: 12pt;
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+        </style>
+        <style type="text/css">
+            chatinfo {
+                width: 100%;
+                height: 22pt;
+                padding-top: 2pt;
+                padding-bottom: 2pt;
+                display: block;
+                text-align: center;
+            }
+            
+            input#chatname {
+                color: white;
+                font-size: 18pt;
+                background: transparent;
+                font-family: Fira Code;
+                border: none;
+                max-width: 70%;
+            }
+
+            interface {
+                padding: 0;
+                background: #0006;
+            }
+
+            interface > img {
+                padding: 0;
+                margin: 0;
+                min-height: 36px;
+                max-height: 36px;
+                vertical-align: middle;
+                display: inline;
+            }
+
+            create {
+                color: white;
+                width: 10vw;
+                text-align: center;
+                font-family: Raleway;
+                font-size: 18pt;
+                padding-left: 7vw;
+            }
+
+            overlay {
+                position: fixed;
+                display: none;
+                z-index: 2;
+                width: 100vw;
+                min-height: 100vh;
+                background-color: #0005;
+            }
+
+            overlay > background {
+                width: 90vw;
+                min-height: 90vh;
+                display: block;
+                position: fixed;
+                top: 5vh;
+                left: 5vw;
+                border: solid #717171 2px;
+                border-radius: 2px;
+            }
+
+            overlay > background > main {
+                width: 90vw;
+                min-height: 90vh;
+                max-height: 90vh;
+                padding: 4px;
+                color: #fff;
+                text-align: center;
+            }
+
+            overlay > background > main > * {
+                display: block;
+                font-family: Raleway;
+                font-size: 18pt;
+            }
+
+            input.overlay {
+                background: none;
+                font-family: Raleway;
+                font-size: 18pt;
+                color: #fff;
+                text-decoration-color: #fff;
+            }
+
+            input::-webkit-input-placeholder { /* Chrome */
+                color: #fff5;
+            }
+            input::-ms-input-placeholder { /* IE 10+ */
+                color: #fff5;
+            }
+            input::-moz-placeholder { /* Firefox 19+ */
+                color: #fff5;
+                opacity: 1;
+            }
+            input:-moz-placeholder { /* Firefox 4 - 18 */
+                color: #fff5;
+                opacity: 1;
+            }
+
+            button.overlay {
+                background: #0000;
+                outline: none;
+                border: none;
+                color: #fff;
+            }
+
+            button.overlay:disabled {
+                color: #999;
+            }
+
+            button.overlay:hover {
+                background: #694daf70;
+            }
+
+            input.sweet, textarea.sweet {
+                border: solid black 2px;
+                border-radius: 1.5px;
+                background: #2e2e2eb0;
+                min-height: 18pt;
+                font-size: 18pt;
+                color: white;
+                vertical-align: top;
+            }
+
+            input.sweet:hover, textarea.sweet:hover {
+                background: #4a4a4ab0;
+            }
+
+            input.sweet:focus, textarea.sweet:focus {
+                outline: none;
+            }
+
+            toggle {
+                display: inline-block;
+                overflow: hidden;
+            }
+
+            toggle > * {
+                float: left;
+                display: inline-block;
+            }
+
+            .item1 { display: inline; }
+            .item2 { display: inline; }
+
+            toggle input[type=radio] {
+                display: none;
+            }
+
+            toggle > * label {
+                display: inline-block;
+                padding: 0px 15px;   
+                line-height: 34px;    
+                border: 1px solid #999;
+                border-right: none;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            toggle .item1 label {
+                border-radius: 6px 0 0 6px;
+            }
+
+            toggle .item2 label {
+                border-radius: 0 6px 6px 0;
+                border-right: 1px solid #999;
+            }
+
+            toggle .item1 input[type=radio]:checked + label {
+                background: #694daf70;
+                color: #fef;
+            }
+
+            toggle .item2 input[type=radio]:checked + label {
+                background: #694daf70;
+                color: #fef;
+            }
+
+            .icon {
+                position: absolute;
+                height: 46px;
+                margin-left: 4px;
+                filter: brightness(1.3);
+                display: inline-block;
+                border-top: #54486E;
+                border-top-width: 2px;
+                border-top-style: solid;
+                border-bottom: #9074BD;
+                border-bottom-width: 2px;
+                border-bottom-style: solid;
+            }
+
+            .icon:hover {
+                border-top: #44626B;
+                border-top-width: 2px;
+                border-top-style: solid;
+                border-bottom: #61A2B1;
+                border-bottom-width: 2px;
+                border-bottom-style: solid;
+                filter: brightness(200%);
+            }
+
+            .custom {
+                top: 100vh;
+                position: fixed;
+            }
+
+            menu > button {
+                display: block;
+                min-width: 90%;
+                margin-left: 5%;
+                margin-top: 2px;
+                margin-bottom: 2px;
+            }
+
+            button.q {
+                color: #e3e3e3;
+                background: #2e2e2e;
+                outline: none;
+                border: 1px solid #999;
+                border-radius: 16%;
+                min-width: 5vh;
+                max-width: 5vh;
+                min-height: 5vh;
+                max-height: 5vh;
+            }
+        </style>
+    </head>
+    <body style="height: 100vh; width: 100vw; padding: 0; margin: 0; background: url(images/background.png); background-size: cover; background-position: center; background-repeat: no-repeat; background-position: center; background-attachment: fixed; overflow: hidden;">
+        <nav class="blur" style="height: 50px; width: 100%; position: fixed; max-height: 50px; z-index: 1;">
+            <div class="noise" style="min-height: 50px; width: 100%;"></div>
+            <div style="min-height: 50px; width: 100%; background: #0006; position: absolute;"></div>
+            <img src="images/logo.png" class="icon"/>
+            <span class="hov" style="position: absolute; background: url(images/logo.svg); filter: invert(100%); width: 400px; height: 100%; background-size: contain; background-repeat: no-repeat; display: inline-block; margin-left: 70px;"></span>
+        </nav>
+        <main style="height: calc(100vh - 50px); width: 100%; margin-top: 50px; position: fixed;">
+            <div class="blur" style="display: block; height: 28pt; background: linear-gradient(80deg, #100a, #203a); margin-bottom: 2px; white-space: nowrap;">
+                <h1 style="width: 30%; padding-left: 40px; padding-top: 2pt; height: 24pt; margin: 0; margin-bottom: 10px; display: inline;">Ваши чаты</h1>
+                <chatinfo style="display: inline; margin-left: 30%; white-space: nowrap;"><input type="text" id="chatname" value="Где-то здесь..." disabled></input></chatinfo>
+            </div>
+            <div style="padding-left: 2px; min-height: calc(100vh - 114px - 28pt); max-height: calc(100vh - 114px - 28pt); overflow-y: hidden;">
+                <nav id="root" class="scrolles" style="width: 30vw; min-height: calc(100vh - 114px - 28pt); max-height: calc(100vh - 114px - 28pt); background: #0008; box-shadow: 2px 2px 5px #0008; border-radius: 1.5px; padding-left: 2px; padding-right: 2px; overflow-x: auto; overflow-y: scroll; position: fixed;">
+                    <br/>
+                    <folder id="root" style="padding-right: 40px;">
+                        <fake id="fakeroot"></fake>
+                        <br/>
+                        <chattab id="show chat create overlay button"><create type="chat">Создать чат!</create></chattab>
+                        <br/>
+                    </folder>
+                </nav>
+                <chat id="chat" class="scrolles" style="width: calc(70vw - 14px); min-height: calc(100vh - 114px - 28pt); max-height: calc(100vh - 114px - 28pt); margin-left: calc(30vw + 8px); background: #0008; box-shadow: 2px 2px 5px #0008; border-radius: 1.5px; position: fixed; overflow-y: scroll; overflow-x: hidden;">
+                    <chatbox id="chatbox" class="scrolles" style="overflow-y: scroll;"><div style="display: none;"></div></chatbox>
+                    <div style="background-color: #0004;">
+                </chat>
+            </main>
+        </div>
+            <interface class="blur" style="min-height: 72px; padding-top: 4px; width: 100%; position: fixed; top: calc(100vh - 48px); padding-left: 8px;">
+                <img id="message attach" src="images/attach.png" class="icon" onclick="document.getElementById('attachments').style.display = 'block';"><input id="message input" class="sweet" style="width: calc(100% - 2 * 64px); margin-left: 48px; margin-right: 8px; margin-top: 8px; font-size: 14pt; font-family: Raleway;" type="text" id="send message text"><img id="message send" src="images/send.png" class="icon">
+            </interface>
+        </div>
+
+        <overlay id="create chat">
+            <background class="moreblur">
+                <main style="background-color: #0004">
+                    <br/><br/><br/>
+
+                    <field style="width: 70%; margin-left: 15%; margin-right: 15%; height: 18pt; font-size: 18pt;"> Your amazing chat name: <input class="sweet" type="text" id="chat name" placeholder="chat name"></field>
+
+                    <br/><br/><br/>
+
+                    <center><toggle class="stylized-input" style="text-align: left;">
+                        <div class="item1">
+                            <input id="chat public button" type="radio" value="chat.public" name="type" checked><label for="chat public button" class="button">Public Chat</label>
+                        </div>
+                        <div class="item2">
+                            <input id="channel button" type="radio" value="channel" name="type"><label for="channel button" class="button">Channel</label>
+                        </div>
+                    </toggle></center>
+
+                    <br/><br/><br/>
+
+                    <button class="overlay" style="width: 20vw; margin-left: 35vw; margin-right: 35vw;" id="create chat button" disabled>Create</button>
+                    <br/>
+                    <button class="overlay" style="width: 20vw; margin-left: 35vw; margin-right: 35vw;" onclick="document.getElementById('create chat').style.display = 'none';">Back</button>
+                </main>
+            </background>
+        </overlay>
+
+        <overlay id="attachments" style="position: absolute;">
+            <background class="moreblur">
+                <main class="scrolles" style="background-color: #0004; overflow-y: scroll;">
+                    <h1>Message editor</h1>
+                    <div>
+                        <h1>Text data</h1>
+                        <textarea class="sweet scrolles" placeholder="Ваше большое сообщение..." style="padding: 10px; min-width: 90%; max-width: 90%; resize: vertical; margin-left: 5%; margin-right: 5%; max-height: 30vh; min-height: 20pt;"></textarea>
+                    </div>
+                    <div>
+                        <h1>Attach images</h1>
+                        <form id="drop-area-img" style="border-style: dashed; border-radius: 5px; border-width: 2px; width: 70%; margin-left: 15%; padding: 1%; height: 10vw; background-color: #2237;"></form>
+                        <br>
+                        <input class="sweet" type="text" id="imageURL" placeholder="URL">
+                        <images id="attached images"></images>
+                    </div>
+                    <div>
+                        <h1>Attach files</h1>
+                        <form id="drop-area" style="border-style: dashed; border-radius: 5px; border-width: 2px; width: 70%; margin-left: 15%; padding: 1%; height: 10vw; background-color: #2237;"></form>
+                        <br>
+                        <input class="sweet" type="text" id="fileURL" placeholder="URL">
+                        <images id="attached files"></images>
+                    </div>
+                    <div>
+                        <h1>Date</h1>
+                        <button class="overlay q" onclick="onDateAdd()">+</button>
+                        <br>
+                        <div id="dates">
+                            
+                        </div>
+                    </div>
+                </main>
+            </background>
+        </overlay>
+
+        <menu id="message context menu" style="min-width: 10vw; max-width: 20vw; top: 100vh; position: fixed; background: linear-gradient(25deg, #49297277, #6d297277); border: solid #994c52a0 1px; border-radius: 2px; padding: 0; margin: 0;">
+            <button class="overlay" onclick="if (window.selectedMessage.type.split('/').includes('text')) navigator.clipboard.writeText(window.selectedMessage.content.text); msgctxmenu.style.top = '100vh'">Copy</button>
+            <button class="overlay" onclick="alert('функция не работает пососите питона'); msgctxmenu.style.top = '100vh'">Reply</button>
+            <button class="overlay" onclick="msgctxmenu.style.top = '100vh'">Close</button>
+        </menu>
+
+        <script type="text/javascript">
+            function getCheckedRadio(name) {
+                let els = document.getElementsByName(name)
+                for (idx in els) if (els[idx].checked) return els[idx]
+            }
+        </script>
+
+        <script type="text/javascript">
+            var msgctxmenu = document.getElementById("message context menu")
+
+            function onDateAdd() {
+                div = document.createElement('div');
+                id = 'date' + document.getElementById('dates').children.length;
+                div.id = id;
+                div.innerHTML = `<input class="sweet" type="date"><button class="overlay q" onclick="document.getElementById('${id}').remove()"> - </button>`;
+                document.getElementById('dates').appendChild(div);
+            }
+
+            document.getElementById("chat name").addEventListener('input', (e) => { 
+                if (e.target.value.length == 0)
+                    document.getElementById("create chat button").setAttribute("disabled", "true") 
+                else 
+                    document.getElementById("create chat button").removeAttribute("disabled") 
+            })
+
+            document.getElementById("create chat button").onclick = (e) => {
+                api.exeqt("user.new." + getCheckedRadio("type").value, document.getElementById("chat name").value).then(() => {
+                    loadChats().then(() => {
+                        document.getElementById('create chat').style.display = 'none';
+                    })
+                })
+            }
+
+            document.getElementById("show chat create overlay button").onclick = (e) => {
+                document.getElementById('create chat').style.display = 'block';
+            }
+
+            async function recursiveLoad(folder, stack) {
+                //console.log("start", folder)
+                folder.data.forEach(async (element) => {
+                    if (typeof(element) == "object") {
+                        let folderEl = document.createElement("folder")
+                        let folder = element
+                        stack[stack.length - 1].appendChild(folderEl)
+                        folderEl.setAttribute("id", folder.name)
+                        let title = document.createElement("h1")
+                        title.setAttribute("class", "title")
+                        title.setAttribute("for", folder.name)
+                        title.innerHTML = folder.name
+                        folderEl.appendChild(title)
+                        //console.log("push", stack)
+                        stack.push(folderEl)
+                        //console.log("pushed", stack)
+                        await recursiveLoad(element, stack)
+                        //console.log("pop", stack)
+                        stack.pop()
+                        //console.log("poped", stack)
+                    } else {
+                        //console.log("element: ", element)
+                        let data = element.split(":")
+                        data[0] = data[0].replace(" ", "")
+                        let chat = (await (api.store.collection(data[0]).doc(data[1])).get()).data()
+                        let chattab = document.createElement("chattab")
+                        if (chat.pictureURL == "")
+                            chattab.innerHTML = `<img src="images/profile-pic.png"><name>${chat.name}</name>`
+                        else
+                            chattab.innerHTML = `<img src="${chat.pictureURL}"><name>${chat.name}</name>`
+                        stack.splice(-1)[0].appendChild(chattab)
+                        //console.log(chat.name)
+                    }
+                })
+            }
+
+            async function loadChats() {
+                let root = {data: (await api.exeqt("user.get", api.uid, ["root"])).root}
+                let stack = [document.getElementById("fakeroot")]
+                stack[0].innerHTML = ""
+                await recursiveLoad(root, stack);
+                [... document.getElementsByClassName("title")].forEach((ea) => {
+                    ea.classList.add("folded")
+                    ea.onclick = (ev) => {
+                        let folder = document.getElementById(ev.target.getAttribute("for"))
+                        if (folder.classList.contains("folded")) folder.classList.remove("folded")
+                        else folder.classList.add("folded")
+                    }
+                })
+                return root
+            }
+
+            window.onresize = function() {
+                if (window.outerWidth != document.body.clientWidth) console.log("Не открывайте эту панель!\nИ не вводите ничего!")
+            }
+
+            window.onresize()
+
+            function recursiveChatFinder(root) {
+                root = root.data
+                for (let i = 0; i < root.length; i++) {
+                    if (typeof(root[i]) == "object")
+                        return recursiveChatFinder(root[i])
+                    else {
+                        return root[i]
+                    }
+                }
+            }
+
+            async function loadChatUsers(link) {
+                return (await (resolveLink(link).databaseLink.child("users")).get()).val()
+            }
+
+            async function loadChat(link) {
+                window.chat = {
+                    link: link,
+                    messages: await api.exeqt("chat.getlast", link),
+                    users: await loadChatUsers(link),
+                    ref: resolveLink(link).databaseLink,
+                    note: resolveLink(link).storeLink
+                }
+                window.chat.note.get().then(async (doc) => {
+                    let chatData = doc.data()
+                    document.getElementById("chatname").value = chatData.name
+                })
+                let lastmsg = Object.keys((await (window.chat.ref.child('messages').orderByKey().limitToLast(1)).get()).val())[0]
+                api.exeqt("chat.getlast", link).then(async (messages) => {
+                    console.log(messages)
+                    for (let key in messages) {
+                        let message = messages[key]
+                        console.log(message, api.users)
+                        if (!(message.sender in api.users))
+                            await api.fetchUser(message.sender)
+                        chatbox.insertBefore(parseMessage(key, api.users[message.sender], message), chatbox.firstChild)
+                    }
+                })
+                window.chat.ref.child("messages").orderByKey().startAfter(lastmsg).on('child_added', async (snapshot) => {
+                    const message = snapshot.val()
+                    if (!(message.sender in api.users))
+                        await api.fetchUser(message.sender)
+                    chatbox.insertBefore(parseMessage(snapshot.key, api.users[message.sender], message), chatbox.firstChild)
+                })
+            }
+
+            api.handleUpdate = async function() {
+                loadChats().then(async (root) => {
+                    if (root.data.length > 0) {
+                        let chatbox = document.getElementById("chatbox")
+                        let chat = recursiveChatFinder(root)
+                        api.store.collection(chat.split(":")[0].replace(" ", "")).doc(chat.split(":")[1]).get().then(async (doc) => {
+                            let chatData = doc.data()
+                            let chatType
+                            if (chat.split(":")[0] == "public chats") chatType = "u"
+                            else if (chat.split(":")[0] == "private chats") chatType = "r"
+                            else chatType = "c"
+                            loadChat(`<bc${chatType}${chat.split(":")[1]}>`)
+                        })
+                    } else document.getElementById("chatbox").innerHTML = "<message><author><name>Hat Excelsior</name></author><text>Кажется у вас нет чатов!<br/>Присоединитесь по ссылке или создайте свой чат!</text></message>"
+                })
+            }
+
+            var messageInput = document.getElementById("message input")
+
+            function sendMessage() {
+                let text = messageInput.value
+                if (text.length == 0) return;
+                if (window?.chat?.link) api.exeqt("chat.write", window.chat.link, "text", {text: text})
+                messageInput.value = ""
+            }
+
+            document.getElementById("message send").addEventListener('click', sendMessage)
+
+            messageInput.addEventListener('keydown', (event) => {
+                if (messageInput.value.length > 0 && event.keyCode == 13) sendMessage()
+            })
+        </script>
+    </body>
+</html>
